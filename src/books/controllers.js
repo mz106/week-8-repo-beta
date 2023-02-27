@@ -1,60 +1,54 @@
+// ======================================
+
+// link for docs queries
+
+// https://sequelize.org/docs/v6/core-concepts/model-querying-basics/
+
+// Must scroll down - no individual links to queries
+
 const Book = require("./model");
-const Author = require("../authors/model");
-const Genre = require("../genre/model");
 
 const addBook = async (req, res) => {
   try {
-    const author = await Author.findOne({
-      where: { authorName: req.body.author },
-    });
-
-    const genre = await Genre.findOne({ where: { genre: req.body.genre } });
-
-    const newBook = await Book.create({
-      title: req.body.title,
-      author: req.body.author,
-      genre: req.body.genre,
-      AuthorId: author.id,
-      GenreId: genre.id,
-    });
+    const newBook = await Book.create(req.body);
 
     res.status(201).json({ message: "success", newBook: newBook });
   } catch (error) {
-    res.status(501).json({ message: "failure", error });
+    res.status(501).json({ errorMessage: error.message, error: error });
   }
 };
 
 const getAllBooks = async (req, res) => {
   try {
     const books = await Book.findAll();
-    console.log(books);
-    res.status(200).json({ message: "success", books });
+
+    res.status(200).json({ message: "success", books: books });
   } catch (error) {
-    res.status(501).json({ message: "failure", error });
+    res.status(501).json({ errorMessage: error.message, error: error });
   }
 };
 
 const getOneBook = async (req, res) => {
   try {
     const book = await Book.findOne({ where: { title: req.params.title } });
-    // const book = await Book.find({ title: req.params.title });
 
     res.status(200).json({ message: "success", book: book });
   } catch (error) {
-    res.status(501).json({ message: "failure", error });
+    res.status(501).json({ errorMessage: error.message, error: error });
   }
 };
 
 const updateBook = async (req, res) => {
   try {
-    const updatedBook = await Book.update(
+    const updateResult = await Book.update(
       { [req.body.updateKey]: req.body.updateValue },
       { where: { title: req.body.title } }
     );
 
-    res.status(204).json({ message: "success", updatedBook });
+    res.status(201).json({ message: "success", updateResult: updateResult });
+    // res.send("hellooooooo");
   } catch (error) {
-    res.status(501).json({ message: "failure", error });
+    res.status(501).json({ errorMessage: error.message, error: error });
   }
 };
 
@@ -66,18 +60,20 @@ const deleteBook = async (req, res) => {
       },
     });
 
+    console.log("result: ", result);
+
     res.status(202).json({ message: "success", result });
   } catch (error) {
-    res.status(501).json({ message: "failure", error });
+    res.status(501).json({ errorMessage: error.message, error: error });
   }
 };
 
 const deleteAllBooks = async (req, res) => {
   try {
     const result = await Book.destroy({ truncate: true });
-    res.send({ message: "success", result });
+    res.status(202).json({ message: "success", result: result });
   } catch (error) {
-    res.status(501).json({ message: "failure", error });
+    res.status(501).json({ errorMessage: error.message, error: error });
   }
 };
 

@@ -19,8 +19,8 @@ router.get("/", getAllBooks);
 
 router.put("/", updateBook);
 
-router.delete("/", deleteBook);
+router.delete("/deleteall", deleteAllBooks);
 
-router.delete("/all", deleteAllBooks);
+router.delete("/", deleteBook);
 
 module.exports = router;
