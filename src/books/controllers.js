@@ -7,10 +7,20 @@
 // Must scroll down - no individual links to queries
 
 const Book = require("./model");
+const Author = require("../authors/model");
 
 const addBook = async (req, res) => {
   try {
-    const newBook = await Book.create(req.body);
+    const author = await Author.findOne({
+      where: { authorName: req.body.author },
+    });
+
+    const newBook = await Book.create({
+      title: req.body.title,
+      author: author.authorName,
+      genre: req.body.genre,
+      AuthorId: author.id,
+    });
 
     res.status(201).json({ message: "success", newBook: newBook });
   } catch (error) {

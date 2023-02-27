@@ -1,12 +1,12 @@
 What do we want to achieve?
 
-Allow user to add an author to a database
+Allow user to add a genre to a database
 
 What do we want a user to be able to do?
 
-1. Input author name
-4. Create author with given data
-5. Have confirmation that the author has been created.
+1. Input genre name
+4. Create genre with given data
+5. Have confirmation that the genre has been created.
 
 Request type
 
@@ -14,26 +14,26 @@ POST
 
 Endpoint/route
 
-/authors
+/genres
 
 Associated Function
 
-addAuthor
+addGenre
 
 Data Requirements
 
 DB
 
-Author:
-    id: number
-    authorName: string
+Book:
+    id: string
+    genre: string
 
 Request
 
 Body: 
     type: object
     properties:
-        authorName: string
+        genre: string
 
 Response
 
@@ -44,11 +44,11 @@ SuccessResponse:
         message:
             type: string
             example: 'success'
-        author:
+        genre:
             type: object
             properties:
+                genre: string
                 id: number
-                author: string
 
 ErrorResponse:
     type: object

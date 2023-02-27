@@ -19,14 +19,18 @@ Endpoint/route
 
 Associated Function
 
-getAllBooks
+getAllBooksByGenre
 
 Data Requirements
 
 DB
 
+Genre:
+    id: number
+    genre: string
+
 Book:
-    id: integer 
+    id: number
     title: string   
     author: string
     genre: string

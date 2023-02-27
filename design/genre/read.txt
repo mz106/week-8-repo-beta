@@ -1,54 +1,56 @@
 What do we want to achieve?
 
-Allow user to add an author to a database
+Allow user to get all books associated with a particular genre
 
 What do we want a user to be able to do?
 
-1. Input author name
-4. Create author with given data
-5. Have confirmation that the author has been created.
+1. Search for a genre
+2. Recieve confirmation and retrieve all books in a given genre
 
 Request type
 
-POST
+GET
 
 Endpoint/route
 
-/authors
+/genres/:genre
 
 Associated Function
 
-addAuthor
+getAllBooks
 
 Data Requirements
 
 DB
 
-Author:
-    id: number
-    authorName: string
+Book:
+    id: integer 
+    title: string   
+    author: string
+    genre: string
 
 Request
 
-Body: 
-    type: object
-    properties:
-        authorName: string
+Body: N/A
 
 Response
 
 SuccessResponse:
     type: object  
-    status: 201  
+    status: 200  
     properties:
         message:
             type: string
             example: 'success'
-        author:
-            type: object
-            properties:
-                id: number
-                author: string
+        books:
+            type: array
+            items:
+                book:
+                    properties:
+                        id: integer 
+                        title: string   
+                        author: string
+                        genre: string 
 
 ErrorResponse:
     type: object
